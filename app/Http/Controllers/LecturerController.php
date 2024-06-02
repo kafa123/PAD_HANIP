@@ -11,7 +11,7 @@ class LecturerController extends Controller
     public function index()
     {
         try {
-            $lecturers = Lecturer::all();
+            $lecturers = Lecturer::with('user')->paginate(15);
             return response()->json(['data' => $lecturers],200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

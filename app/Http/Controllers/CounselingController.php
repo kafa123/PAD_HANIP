@@ -19,12 +19,12 @@ class CounselingController extends Controller
             // dd($user);
             if($user->role == 'Dosen'){
                 $dosen = Lecturer::where('user_id',$user->id)->first();
-                $counselings = Counseling::with('project.lecturer.user')->with('student.user')->where('lecturer_id',$dosen->id)->get();
+                $counselings = Counseling::with('project.lecturer.user')->with('student.user')->where('lecturer_id',$dosen->id)->orderByDesc('id')->paginate(10);
                 return response()->json(['data' => $counselings],200);
             }
             elseif($user->role == 'Mahasiswa'){
                 $student = Student::where('id',$user->id)->first();
-                $counselings = Counseling::with('student.user')->with('student.user')->where('student_id',$student->id)->get();
+                $counselings = Counseling::with('student.user')->with('student.user')->where('student_id',$student->id)->orderByDesc('id')->paginate();
                 return response()->json(['data' => $counselings],200);
             }
             else{

@@ -12,7 +12,7 @@ class StudentController extends Controller
     public function index()
     {
         try {
-            $students = Student::with('user')->get();
+            $students = Student::with('user')->paginate(15);
 
             return response()->json(['data' => $students],200);
         } catch (\Exception $e) {

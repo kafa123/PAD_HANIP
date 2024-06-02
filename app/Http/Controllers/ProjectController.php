@@ -11,7 +11,7 @@ class ProjectController extends Controller
     public function index()
     {
         try {
-            $projects = Project::with('lecturer')->get();
+            $projects = Project::with('lecturer.user')->paginate(10);
             return response()->json(['data' => $projects],200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
